@@ -137,12 +137,12 @@ from typing import Callable
 
 def make_matrix(num_rows: int, num_cols: int,
                     entry_fn: Callable[[int, int], float]) -> Matrix:
-"""
-Returns a num_rows x num_cols matrix
-whose (i,j)-th entry is entry_fn(i, j)
-"""
-return [[entry_fn(i, j) # given i, create a list
-for j in range(num_cols)] # [entry_fn(i, 0), ... ] for i in range(num_rows)] # create one list for each i
+    #"""
+#Returns a num_rows x num_cols matrix
+#whose (i,j)-th entry is entry_fn(i, j)
+#"""
+    return [[entry_fn(i, j) # given i, create a list
+    for j in range(num_cols)] # [entry_fn(i, 0), ... ] for i in range(num_rows)] # create one list for each i
 
 """A simulation to demonstrate that if you wait for two heads in a row, it takes 6 flips on average, while you wait for a heads then a tails, it takes 4 flips on average.
 
