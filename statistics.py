@@ -83,7 +83,7 @@ plt.ylabel("# of people")
 # plt.show()
 
 # FUNCTIONS
-correlation(xs: List[float], ys: List[float]) -> float
+#correlation(xs: List[float], ys: List[float]) -> float
 #         Measures how much xs and ys vary in tandem about their means
 
 # def correlation(xs,ys):
