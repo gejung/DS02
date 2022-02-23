@@ -154,9 +154,9 @@ https://jcbain.github.io/blog/coin-flip-probs/
 > Then I need a function to flip the coin multiple times and to stop only when a certain sequence of sides were met. In other words, stop when two heads were flipped in a row. From this, I want the number of times it took to achieve this sequence to be returned.
 
 
+"""
 
 
-#"""
 
 import numpy as np
 
