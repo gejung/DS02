@@ -144,14 +144,14 @@ def make_matrix(num_rows: int, num_cols: int,
     return [[entry_fn(i, j) # given i, create a list
     for j in range(num_cols)] # [entry_fn(i, 0), ... ] for i in range(num_rows)] # create one list for each i
 
-"""A simulation to demonstrate that if you wait for two heads in a row, it takes 6 flips on average, while you wait for a heads then a tails, it takes 4 flips on average.
+#"""A simulation to demonstrate that if you wait for two heads in a row, it takes 6 flips on average, while you wait for a heads then a tails, it takes 4 flips on average.
 
-https://www.codechef.com/wiki/tutorial-expectation
-https://jcbain.github.io/blog/coin-flip-probs/
+#https://www.codechef.com/wiki/tutorial-expectation
+#https://jcbain.github.io/blog/coin-flip-probs/
 
-> The first is a function to simulate flipping a fair coin…
+#> The first is a function to simulate flipping a fair coin…
 
-> Then I need a function to flip the coin multiple times and to stop only when a certain sequence of sides were met. In other words, stop when two heads were flipped in a row. From this, I want the number of times it took to achieve this sequence to be returned."""
+#> Then I need a function to flip the coin multiple times and to stop only when a certain sequence of sides were met. In other words, stop when two heads were flipped in a row. From this, I want the number of times it took to achieve this sequence to be returned."""
 
 
 
