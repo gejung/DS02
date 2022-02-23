@@ -15,12 +15,24 @@ from typing import List
 
 Vector = List[float]
 
+# hi from Deepnote!
+
+height_weight_age = [70,  # inches,
+                     170, # pounds,
+                     40 ] # years
+
+grades = [95,   # exam1
+          80,   # exam2
+          75,   # exam3
+          62 ]  # exam4
+
 def add(v: Vector, w: Vector) -> Vector:
     """Adds corresponding elements"""
     assert len(v) == len(w), "vectors must be the same length"
-    return [v_i + w_i for v_i, w_i in zip(v, w)]
-    
 
+    return [v_i + w_i for v_i, w_i in zip(v, w)]
+
+assert add([1, 2, 3], [4, 5, 6]) == [5, 7, 9]
 
 def subtract(v: Vector, w: Vector) -> Vector:
     """Subtracts corresponding elements"""
@@ -28,6 +40,7 @@ def subtract(v: Vector, w: Vector) -> Vector:
 
     return [v_i - w_i for v_i, w_i in zip(v, w)]
 
+assert subtract([5, 7, 9], [4, 5, 6]) == [1, 2, 3]
 
 def vector_sum(vectors: List[Vector]) -> Vector:
     """Sums all corresponding elements"""
@@ -42,18 +55,20 @@ def vector_sum(vectors: List[Vector]) -> Vector:
     return [sum(vector[i] for vector in vectors)
             for i in range(num_elements)]
 
+assert vector_sum([[1, 2], [3, 4], [5, 6], [7, 8]]) == [16, 20]
 
 def scalar_multiply(c: float, v: Vector) -> Vector:
     """Multiplies every element by c"""
-    # Like add() and subtract() 
     return [c * v_i for v_i in v]
 
+assert scalar_multiply(2, [1, 2, 3]) == [2, 4, 6]
 
 def vector_mean(vectors: List[Vector]) -> Vector:
     """Computes the element-wise average"""
     n = len(vectors)
     return scalar_multiply(1/n, vector_sum(vectors))
 
+assert vector_mean([[1, 2], [3, 4], [5, 6]]) == [3, 4]
 
 def dot(v: Vector, w: Vector) -> float:
     """Computes v_1 * w_1 + ... + v_n * w_n"""
@@ -61,11 +76,13 @@ def dot(v: Vector, w: Vector) -> float:
 
     return sum(v_i * w_i for v_i, w_i in zip(v, w))
 
+assert dot([1, 2, 3], [4, 5, 6]) == 32  # 1 * 4 + 2 * 5 + 3 * 6
 
 def sum_of_squares(v: Vector) -> float:
     """Returns v_1 * v_1 + ... + v_n * v_n"""
     return dot(v, v)
 
+assert sum_of_squares([1, 2, 3]) == 14  # 1 * 1 + 2 * 2 + 3 * 3
 
 import math
 
@@ -73,151 +90,99 @@ def magnitude(v: Vector) -> float:
     """Returns the magnitude (or length) of v"""
     return math.sqrt(sum_of_squares(v))   # math.sqrt is square root function
 
+assert magnitude([3, 4]) == 5
 
 def squared_distance(v: Vector, w: Vector) -> float:
     """Computes (v_1 - w_1) ** 2 + ... + (v_n - w_n) ** 2"""
     return sum_of_squares(subtract(v, w))
 
-# def distance(v: Vector, w: Vector) -> float:
-#     """Computes the distance between v and w"""
-#     return math.sqrt(squared_distance(v, w))
+def distance(v: Vector, w: Vector) -> float:
+    """Computes the distance between v and w"""
+    return math.sqrt(squared_distance(v, w))
 
-# This is possibly clearer if we write it as (the equivalent):
+
 def distance(v: Vector, w: Vector) -> float:  # type: ignore
     return magnitude(subtract(v, w))
-
-assert add([1, 2, 3], [10,9,8]) == [11,11,11], "something's wrong with add()"
-assert subtract([11,11,11], [1, 2, 3]) == [10,9,8], "trouble with subtract()"
-assert vector_sum([[3,4], [5,6], [7,8]]) == [15, 18], "vector_sum() problem"
-assert vector_mean([[1, 2], [3, 4], [5, 6]]) == [3, 4], "oopsie vector_mean()"
-assert dot([1, 2, 3], [4, 5, 6]) == 32, "dot() issue"  # 1 * 4 + 2 * 5 + 3 * 6
-assert sum_of_squares([1, 2, 3]) == 14, "sum_of_squares() fail"  # 1 * 1 + 2 * 2 + 3 * 3
-assert magnitude([3, 4]) == 5, "issue with magnitude()"
-
-"""# Matrices
-A matrix is a two-dimensional collection of numbers. We will represent matrices as lists of lists, with each inner list having the same size and representing a row of the matrix. If A is a matrix, then A[i][j] is the element in the ith row and the jth column. Per mathematical convention, we will frequently use capital letters to represent matri‐ ces. 
-
-For example:
-"""
 
 # Another type alias
 Matrix = List[List[float]]
 
-A = [[1, 2, 3], # A has 2 rows and 3 columns
-    [4, 5, 6]]
-""
-B = [[1, 2], # B has 3 rows and 2 columns
+A = [[1, 2, 3],  # A has 2 rows and 3 columns
+     [4, 5, 6]]
+
+B = [[1, 2],     # B has 3 rows and 2 columns
      [3, 4],
      [5, 6]]
 
 from typing import Tuple
 
 def shape(A: Matrix) -> Tuple[int, int]:
-  """Returns (# of rows of A, # of columns of A)"""
-  num_rows = len(A)
-  num_cols = len(A[0]) if A else 0 # number of elements in first row 
-  return num_rows, num_cols
+    """Returns (# of rows of A, # of columns of A)"""
+    num_rows = len(A)
+    num_cols = len(A[0]) if A else 0   # number of elements in first row
+    return num_rows, num_cols
 
-assert shape([[1, 2, 3], [4, 5, 6]]) == (2, 3) # 2 rows, 3 columns
-
-# If a matrix has n rows and k columns, we will refer to it as an n × k matrix. 
-# We can (and sometimes will) think of each row of an n × k matrix as a vector 
-# of length k, and each column as a vector of length n:
+assert shape([[1, 2, 3], [4, 5, 6]]) == (2, 3)  # 2 rows, 3 columns
 
 def get_row(A: Matrix, i: int) -> Vector:
-  """Returns the i-th row of A (as a Vector)"""
-  return A[i] # A[i] is already the ith row
+    """Returns the i-th row of A (as a Vector)"""
+    return A[i]             # A[i] is already the ith row
 
-def get_column(A: Matrix, j: int) -> Vector: 
-  """Returns the j-th column of A (as a Vector)""" 
-  return [A_i[j] for A_i in A] # jth element of row A_i
-  # for A_i in A] # for each row A_i
+def get_column(A: Matrix, j: int) -> Vector:
+    """Returns the j-th column of A (as a Vector)"""
+    return [A_i[j]          # jth element of row A_i
+            for A_i in A]   # for each row A_i
 
 from typing import Callable
 
-def make_matrix(num_rows: int, num_cols: int,
-                    entry_fn: Callable[[int, int], float]) -> Matrix:
-    #"""
-#Returns a num_rows x num_cols matrix
-#whose (i,j)-th entry is entry_fn(i, j)
-#"""
-    return [[entry_fn(i, j) # given i, create a list
-    for j in range(num_cols)] # [entry_fn(i, 0), ... ] for i in range(num_rows)] # create one list for each i
-
-#"""A simulation to demonstrate that if you wait for two heads in a row, it takes 6 flips on average, while you wait for a heads then a tails, it takes 4 flips on average.
-
-#https://www.codechef.com/wiki/tutorial-expectation
-#https://jcbain.github.io/blog/coin-flip-probs/
-
-#> The first is a function to simulate flipping a fair coin…
-
-#> Then I need a function to flip the coin multiple times and to stop only when a certain sequence of sides were met. In other words, stop when two heads were flipped in a row. From this, I want the number of times it took to achieve this sequence to be returned."""
-
-
-
-
-
-import numpy as np
-
-def flip_coin():
-    """Simulate flipping a coin.
-    
-    Returns
-    -------
-    str
-        "H" for heads/ "T" for tails.
+def make_matrix(num_rows: int,
+                num_cols: int,
+                entry_fn: Callable[[int, int], float]) -> Matrix:
     """
-    flip = np.random.binomial(1, .5, 1)
-    if flip[0] == 1:
-        side = "H"
-    else:
-        side = "T"
-    return side
-
-
-def flip_condition(stop_condition=['H', 'T'], print_opt=False):
-    """Flip coin until flip pattern is met.
-    
-    Parameters
-    ----------
-    stop_condition: list
-        The sequence of flips to be matched before flipping stops.
-    
-    print_opt: bool
-        Option to print the sequence of flips.
-        
-    Returns
-    -------
-    int
-        The number of flips it took to match the pattern.
+    Returns a num_rows x num_cols matrix
+    whose (i,j)-th entry is entry_fn(i, j)
     """
-    flip_list = []
-    
-    current_index = 0
-    current_condition = None
-    while current_condition != stop_condition:
-        flip_list.append(flip_coin())
-        if len(flip_list) >= len(stop_condition):
-            current_condition = [flip_list[i] for i in range(current_index - len(stop_condition) +1 , current_index + 1)]
-        else:
-            pass
-        current_index +=1
-        
-    if print_opt:
-        print(flip_list)
-    return current_index
+    return [[entry_fn(i, j)             # given i, create a list
+             for j in range(num_cols)]  #   [entry_fn(i, 0), ... ]
+            for i in range(num_rows)]   # create one list for each i
 
-mean_ht = np.mean([flip_condition(['H', 'T']) for i in range(10000)])
-mean_hh = np.mean([flip_condition(['H','H']) for i in range(10000)])
+def identity_matrix(n: int) -> Matrix:
+    """Returns the n x n identity matrix"""
+    return make_matrix(n, n, lambda i, j: 1 if i == j else 0)
 
-print("Average # of flips to achieve heads and then heads again: {}".format(mean_hh))
-print("Average # of flips to achieve heads and then tails: {}".format(mean_ht))
+assert identity_matrix(5) == [[1, 0, 0, 0, 0],
+                              [0, 1, 0, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 0, 1, 0],
+                              [0, 0, 0, 0, 1]]
 
-np.mean([flip_condition(['H', 'T', 'H']) for i in range(10000)])
+data = [[70, 170, 40],
+        [65, 120, 26],
+        [77, 250, 19],
+        # ....
+       ]
 
-# 9.9231
+friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
+               (4, 5), (5, 6), (5, 7), (6, 8), (7, 8), (8, 9)]
 
-np.mean([flip_condition(['H','H','H','H','H']) for i in range(10000)])
+#            user 0  1  2  3  4  5  6  7  8  9
+#
+friend_matrix = [[0, 1, 1, 0, 0, 0, 0, 0, 0, 0],  # user 0
+                 [1, 0, 1, 1, 0, 0, 0, 0, 0, 0],  # user 1
+                 [1, 1, 0, 1, 0, 0, 0, 0, 0, 0],  # user 2
+                 [0, 1, 1, 0, 1, 0, 0, 0, 0, 0],  # user 3
+                 [0, 0, 0, 1, 0, 1, 0, 0, 0, 0],  # user 4
+                 [0, 0, 0, 0, 1, 0, 1, 1, 0, 0],  # user 5
+                 [0, 0, 0, 0, 0, 1, 0, 0, 1, 0],  # user 6
+                 [0, 0, 0, 0, 0, 1, 0, 0, 1, 0],  # user 7
+                 [0, 0, 0, 0, 0, 0, 1, 1, 0, 1],  # user 8
+                 [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]]  # user 9
 
-np.mean([flip_condition(['T','T','T']) for i in range(10000)])
+assert friend_matrix[0][2] == 1, "0 and 2 are friends"
+assert friend_matrix[0][8] == 0, "0 and 8 are not friends"
+
+# only need to look at one row
+friends_of_five = [i
+                   for i, is_friend in enumerate(friend_matrix[5])
+                   if is_friend]
 
